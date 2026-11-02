@@ -1,0 +1,42 @@
+[
+  {
+    "file": "00_full_page.png",
+    "href": null,
+    "text": "full page on load"
+  },
+  {
+    "file": "00_initial_view.png",
+    "href": null,
+    "text": "viewport on load"
+  },
+  {
+    "file": "01_shop.png",
+    "href": "#shop",
+    "text": "Shop",
+    "method": "click"
+  },
+  {
+    "file": "02_reviews.png",
+    "href": "#reviews",
+    "text": "Reviews",
+    "method": "click"
+  },
+  {
+    "file": "03_about.png",
+    "href": "#",
+    "text": "About",
+    "method": "click"
+  },
+  {
+    "file": "04_contact.png",
+    "href": "#",
+    "text": "Contact",
+    "method": "click"
+  },
+  {
+    "file": "05_shop-the-collection.png",
+    "href": "#shop",
+    "text": "Shop the Collection",
+    "method": "click"
+  }
+]

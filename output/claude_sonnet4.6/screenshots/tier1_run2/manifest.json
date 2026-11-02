@@ -1,0 +1,78 @@
+[
+  {
+    "file": "00_full_page.png",
+    "href": null,
+    "text": "full page on load"
+  },
+  {
+    "file": "00_initial_view.png",
+    "href": null,
+    "text": "viewport on load"
+  },
+  {
+    "file": "01_home.png",
+    "href": "#home",
+    "text": "Home",
+    "method": "click"
+  },
+  {
+    "file": "02_shop.png",
+    "href": "#shop",
+    "text": "Shop",
+    "method": "click"
+  },
+  {
+    "file": "03_why-us.png",
+    "href": "#features",
+    "text": "Why Us",
+    "method": "click"
+  },
+  {
+    "file": "04_contact.png",
+    "href": "#contact",
+    "text": "Contact",
+    "method": "click"
+  },
+  {
+    "file": "05_shop-now.png",
+    "href": "#shop",
+    "text": "Shop Now",
+    "method": "click"
+  },
+  {
+    "file": "06_women.png",
+    "href": "#shop",
+    "text": "Women",
+    "method": "click"
+  },
+  {
+    "file": "07_men.png",
+    "href": "#shop",
+    "text": "Men",
+    "method": "click"
+  },
+  {
+    "file": "08_accessories.png",
+    "href": "#shop",
+    "text": "Accessories",
+    "method": "click"
+  },
+  {
+    "file": "09_shipping-info.png",
+    "href": "#",
+    "text": "Shipping Info",
+    "method": "click"
+  },
+  {
+    "file": "10_returns.png",
+    "href": "#",
+    "text": "Returns",
+    "method": "click"
+  },
+  {
+    "file": "11_faq.png",
+    "href": "#",
+    "text": "FAQ",
+    "method": "click"
+  }
+]

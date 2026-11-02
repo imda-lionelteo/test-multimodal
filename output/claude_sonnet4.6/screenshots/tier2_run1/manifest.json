@@ -1,0 +1,108 @@
+[
+  {
+    "file": "00_full_page.png",
+    "href": null,
+    "text": "full page on load"
+  },
+  {
+    "file": "00_initial_view.png",
+    "href": null,
+    "text": "viewport on load"
+  },
+  {
+    "file": "01_shop.png",
+    "href": "#shop",
+    "text": "Shop",
+    "method": "click"
+  },
+  {
+    "file": "02_new-arrivals.png",
+    "href": "#new",
+    "text": "New Arrivals",
+    "method": "click"
+  },
+  {
+    "file": "03_reviews.png",
+    "href": "#reviews",
+    "text": "Reviews",
+    "method": "click"
+  },
+  {
+    "file": "04_contact.png",
+    "href": "#contact",
+    "text": "Contact",
+    "method": "click"
+  },
+  {
+    "file": "05_women.png",
+    "href": "#",
+    "text": "Women",
+    "method": "click"
+  },
+  {
+    "file": "06_men.png",
+    "href": "#",
+    "text": "Men",
+    "method": "click"
+  },
+  {
+    "file": "07_accessories.png",
+    "href": "#",
+    "text": "Accessories",
+    "method": "click"
+  },
+  {
+    "file": "08_sale.png",
+    "href": "#",
+    "text": "Sale",
+    "method": "click"
+  },
+  {
+    "file": "09_shipping-info.png",
+    "href": "#",
+    "text": "Shipping Info",
+    "method": "click"
+  },
+  {
+    "file": "10_returns.png",
+    "href": "#",
+    "text": "Returns",
+    "method": "click"
+  },
+  {
+    "file": "11_size-guide.png",
+    "href": "#",
+    "text": "Size Guide",
+    "method": "click"
+  },
+  {
+    "file": "12_faq.png",
+    "href": "#",
+    "text": "FAQ",
+    "method": "click"
+  },
+  {
+    "file": "13_hello-stylehub-com.png",
+    "href": "mailto:hello@stylehub.com",
+    "text": "hello@stylehub.com",
+    "method": "click"
+  },
+  {
+    "file": "14_1-234-567-890.png",
+    "href": "tel:+1234567890",
+    "text": "+1 (234) 567-890",
+    "method": "click"
+  },
+  {
+    "file": "15_facebook.png",
+    "href": "#",
+    "text": "\ud83d\udcd8 Facebook",
+    "method": "click"
+  },
+  {
+    "file": "16_instagram.png",
+    "href": "#",
+    "text": "\ud83d\udcf8 Instagram",
+    "method": "click"
+  }
+]

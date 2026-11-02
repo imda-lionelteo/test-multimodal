@@ -1,0 +1,120 @@
+[
+  {
+    "file": "00_full_page.png",
+    "href": null,
+    "text": "full page on load"
+  },
+  {
+    "file": "00_initial_view.png",
+    "href": null,
+    "text": "viewport on load"
+  },
+  {
+    "file": "01_new-in.png",
+    "href": "#new-in",
+    "text": "New in",
+    "method": "click"
+  },
+  {
+    "file": "02_sale.png",
+    "href": "#sale",
+    "text": "Sale",
+    "method": "click"
+  },
+  {
+    "file": "03_about.png",
+    "href": "#about",
+    "text": "About",
+    "method": "click"
+  },
+  {
+    "file": "04_contact.png",
+    "href": "#contact",
+    "text": "Contact",
+    "method": "click"
+  },
+  {
+    "file": "05_shop-new-in.png",
+    "href": "#new-in",
+    "text": "Shop New In",
+    "method": "click"
+  },
+  {
+    "file": "06_view-sale.png",
+    "href": "#sale-grid",
+    "text": "View sale",
+    "method": "click"
+  },
+  {
+    "file": "07_new-in.png",
+    "href": "#new-in",
+    "text": "New in",
+    "method": "click"
+  },
+  {
+    "file": "08_sale.png",
+    "href": "#sale",
+    "text": "Sale",
+    "method": "click"
+  },
+  {
+    "file": "09_dresses.png",
+    "href": "#",
+    "text": "Dresses",
+    "method": "click"
+  },
+  {
+    "file": "10_outerwear.png",
+    "href": "#",
+    "text": "Outerwear",
+    "method": "click"
+  },
+  {
+    "file": "11_knitwear.png",
+    "href": "#",
+    "text": "Knitwear",
+    "method": "click"
+  },
+  {
+    "file": "12_sizing-guide.png",
+    "href": "#",
+    "text": "Sizing guide",
+    "method": "click"
+  },
+  {
+    "file": "13_shipping-info.png",
+    "href": "#",
+    "text": "Shipping info",
+    "method": "click"
+  },
+  {
+    "file": "14_returns.png",
+    "href": "#",
+    "text": "Returns",
+    "method": "click"
+  },
+  {
+    "file": "15_care-guide.png",
+    "href": "#",
+    "text": "Care guide",
+    "method": "click"
+  },
+  {
+    "file": "16_hello-maisontoile-com.png",
+    "href": "mailto:hello@maisontoile.com",
+    "text": "hello@maisontoile.com",
+    "method": "click"
+  },
+  {
+    "file": "17_instagram.png",
+    "href": "#",
+    "text": "Instagram",
+    "method": "click"
+  },
+  {
+    "file": "18_pinterest.png",
+    "href": "#",
+    "text": "Pinterest",
+    "method": "click"
+  }
+]

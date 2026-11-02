@@ -1,0 +1,48 @@
+[
+  {
+    "file": "00_full_page.png",
+    "href": null,
+    "text": "full page on load"
+  },
+  {
+    "file": "00_initial_view.png",
+    "href": null,
+    "text": "viewport on load"
+  },
+  {
+    "file": "01_verdana.png",
+    "href": "#",
+    "text": "Verdana",
+    "method": "click"
+  },
+  {
+    "file": "02_new-in.png",
+    "href": "#new",
+    "text": "New in",
+    "method": "click"
+  },
+  {
+    "file": "03_sale.png",
+    "href": "#sale",
+    "text": "Sale",
+    "method": "click"
+  },
+  {
+    "file": "04_about.png",
+    "href": "#",
+    "text": "About",
+    "method": "click"
+  },
+  {
+    "file": "05_care-guide.png",
+    "href": "#",
+    "text": "Care guide",
+    "method": "click"
+  },
+  {
+    "file": "06_shop-the-collection.png",
+    "href": "#new",
+    "text": "Shop the collection",
+    "method": "click"
+  }
+]

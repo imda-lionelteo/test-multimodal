@@ -9,6 +9,8 @@ import json
 import numpy as np
 import os
 
+FALLBACK_ALPHA = 0.25  # fill opacity for boxes drawn in place of an unusable mask
+
 client = genai.Client()
 
 def parse_json(json_output: str):
@@ -30,6 +32,7 @@ class SegmentationMask:
     x1: int  # in [0..width - 1]
     mask: np.ndarray  # [img_height, img_width] with values 0..255
     label: str
+    is_fallback: bool = False  # True when the mask is just the filled bounding box
 
 def extract_segmentation_masks(im: Image.Image, output_dir: str = "segmentation_outputs"):
     """Extract segmentation masks for dark patterns from an image."""
@@ -97,6 +100,7 @@ def extract_segmentation_masks(im: Image.Image, output_dir: str = "segmentation_
 
         # Process mask, falling back to a filled box if the model returned a missing or malformed mask
         np_mask = np.zeros((im.size[1], im.size[0]), dtype=np.uint8)
+        is_fallback = False
         try:
             # Remove prefix
             png_str = (item.get("mask") or "").removeprefix("data:image/png;base64,")
@@ -108,7 +112,8 @@ def extract_segmentation_masks(im: Image.Image, output_dir: str = "segmentation_
             np_mask[y0:y1, x0:x1] = mask
         except Exception:
             np_mask[y0:y1, x0:x1] = 255
-        masks.append(SegmentationMask(y0, x0, y1, x1, np_mask, label))
+            is_fallback = True
+        masks.append(SegmentationMask(y0, x0, y1, x1, np_mask, label, is_fallback))
 
     return masks
 
@@ -198,7 +203,8 @@ def plot_segmentation_masks(img: Image.Image, segmentation_masks: list[Segmentat
     # Overlay the mask
     for i, mask in enumerate(segmentation_masks):
         color = colors[i % len(colors)]
-        img = overlay_mask_on_img(img, mask.mask, color)
+        # Fallback boxes cover the whole element, so keep them light enough to read the text underneath
+        img = overlay_mask_on_img(img, mask.mask, color, alpha=FALLBACK_ALPHA if mask.is_fallback else 0.7)
 
     # Create a drawing object
     draw = ImageDraw.Draw(img)
