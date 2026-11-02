@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thread & Co. — Modern Clothing</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; color: #1a1a1a; line-height: 1.5; }
+  a { text-decoration: none; color: inherit; }
+
+  /* Header */
+  header { position: sticky; top: 0; background: #fff; z-index: 100; box-shadow: 0 1px 8px rgba(0,0,0,0.06); }
+  .topbar { background: #1a1a1a; color: #fff; text-align: center; font-size: 0.85rem; padding: 8px; }
+  .nav { display: flex; justify-content: space-between; align-items: center; padding: 16px 32px; max-width: 1200px; margin: 0 auto; }
+  .logo { font-size: 1.5rem; font-weight: 700; letter-spacing: 1px; }
+  .nav-links a { margin: 0 14px; font-weight: 500; }
+  .cart-btn { background: #1a1a1a; color: #fff; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-size: 0.95rem; }
+
+  /* Hero */
+  .hero { background: linear-gradient(135deg,#f5e9dc,#e8d5c4); text-align: center; padding: 80px 20px; }
+  .hero h1 { font-size: 2.8rem; margin-bottom: 12px; }
+  .hero p { font-size: 1.1rem; color: #555; margin-bottom: 24px; }
+  .btn-primary { background: #1a1a1a; color: #fff; padding: 14px 30px; border-radius: 8px; font-weight: 600; display: inline-block; border: none; cursor: pointer; }
+
+  /* Value bar */
+  .value-bar { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; padding: 20px; background: #fafafa; font-size: 0.9rem; color: #444; }
+
+  /* Products */
+  .section-title { text-align: center; margin: 50px 0 30px; font-size: 1.8rem; }
+  .products { display: grid; grid-template-columns: repeat(auto-fill,minmax(240px,1fr)); gap: 28px; max-width: 1200px; margin: 0 auto; padding: 0 32px 60px; }
+  .card { border: 1px solid #eee; border-radius: 12px; overflow: hidden; transition: transform .2s, box-shadow .2s; background:#fff; }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+  .card .img { height: 260px; background-size: cover; background-position: center; position: relative; }
+  .badge { position: absolute; top: 12px; left: 12px; background: #d64545; color: #fff; font-size: 0.75rem; padding: 4px 10px; border-radius: 20px; font-weight: 600; }
+  .card-body { padding: 16px; }
+  .card-body h3 { font-size: 1.05rem; margin-bottom: 6px; }
+  .price { font-weight: 700; font-size: 1.1rem; }
+  .old-price { text-decoration: line-through; color: #999; font-weight: 400; margin-left: 8px; font-size: 0.9rem; }
+  .stock { font-size: 0.8rem; color: #d64545; margin: 8px 0; min-height: 18px; }
+  .stars { color: #f5a623; font-size: 0.85rem; }
+  .add-btn { width: 100%; margin-top: 10px; background: #1a1a1a; color: #fff; border: none; padding: 10px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+  .add-btn:hover { background: #333; }
+
+  /* Reviews */
+  .reviews { background: #fafafa; padding: 50px 20px; }
+  .review-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(250px,1fr)); gap: 20px; max-width: 1000px; margin: 0 auto; }
+  .review { background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+  .review p { font-style: italic; color: #444; margin: 8px 0; }
+  .review .name { font-weight: 600; font-size: 0.9rem; }
+
+  /* Cart drawer */
+  .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; }
+  .cart-drawer { position: fixed; top: 0; right: -420px; width: 380px; max-width: 90%; height: 100%; background: #fff; z-index: 201; transition: right .3s; padding: 24px; overflow-y: auto; box-shadow: -4px 0 20px rgba(0,0,0,0.1); }
+  .cart-drawer.open { right: 0; }
+  .cart-drawer h2 { margin-bottom: 16px; }
+  .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+  .cart-item button { background: none; border: none; color: #d64545; cursor: pointer; font-size: 1.1rem; }
+  .cart-total { font-weight: 700; font-size: 1.2rem; margin: 18px 0; }
+  .checkout-btn { width: 100%; background: #1a1a1a; color: #fff; border: none; padding: 14px; border-radius: 8px; font-weight: 600; cursor: pointer; }
+  .close-cart { float: right; background: none; border: none; font-size: 1.4rem; cursor: pointer; }
+  .ship-progress { background:#f0f0f0; border-radius:20px; height:8px; margin:10px 0; overflow:hidden; }
+  .ship-progress div { height:100%; background:#4caf50; width:0%; transition:width .3s; }
+  .ship-note { font-size:0.8rem; color:#555; }
+
+  footer { background: #1a1a1a; color: #ccc; text-align: center; padding: 30px; font-size: 0.85rem; }
+
+  @media(max-width:600px){ .nav-links{display:none;} .hero h1{font-size:2rem;} }
+</style>
+</head>
+<body>
+
+<header>
+  <!-- Set a REAL sale end date below. This countdown is honest only if the sale truly ends then. -->
+  <div class="topbar" id="topbar">Free shipping on orders over $75 • Seasonal Sale ends in <span id="countdown"></span></div>
+  <div class="nav">
+    <div class="logo">THREAD & CO.</div>
+    <nav class="nav-links">
+      <a href="#shop">Shop</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </nav>
+    <button class="cart-btn" onclick="openCart()">Cart (<span id="cart-count">0</span>)</button>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>Effortless Style, Everyday</h1>
+  <p>Quality clothing made to last. Loved by over 10,000 happy customers.</p>
+  <a href="#shop"><button class="btn-primary">Shop the Collection</button></a>
+</section>
+
+<div class="value-bar">
+  <span>🚚 Free shipping over $75</span>
+  <span>↩️ 30-day easy returns</span>
+  <span>🔒 Secure checkout</span>
+  <span>⭐ 4.8/5 from 2,300+ reviews</span>
+</div>
+
+<h2 class="section-title" id="shop">Featured Products</h2>
+<div class="products" id="product-grid"></div>
+
+<section class="reviews" id="reviews">
+  <h2 class="section-title">What Our Customers Say</h2>
+  <div class="review-grid">
+    <div class="review"><div class="stars">★★★★★</div><p>"The quality exceeded my expectations. Fits perfectly and the fabric is so soft."</p><div class="name">— Sarah M.</div></div>
+    <div class="review"><div class="stars">★★★★★</div><p>"Fast shipping and easy returns. This is now my go-to shop for basics."</p><div class="name">— James T.</div></div>
+    <div class="review"><div class="stars">★★★★☆</div><p>"Great value for the price. Ordered three items and love them all."</p><div class="name">— Priya K.</div></div>
+  </div>
+</section>
+
+<!-- Cart -->
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cart-drawer">
+  <button class="close-cart" onclick="closeCart()">×</button>
+  <h2>Your Cart</h2>
+  <div id="cart-items"></div>
+  <div class="ship-note" id="ship-note"></div>
+  <div class="ship-progress"><div id="ship-bar"></div></div>
+  <div class="cart-total">Total: $<span id="cart-total">0.00</span></div>
+  <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+</div>
+
+<footer>
+  <p>© 2024 Thread & Co. — All rights reserved.</p>
+  <p style="margin-top:8px;">This is a demo storefront. Connect a payment processor (Shopify, Stripe, etc.) to accept real orders.</p>
+</footer>
+
+<script>
+  /* ============================================================
+     EDIT YOUR PRODUCTS HERE
+     - Set "stock" to the REAL number of items you have.
+       The "Only X left" message only shows when stock <= 5,
+       so it stays truthful. Remove "stock" to hide it.
+     - "oldPrice" is optional (shows a genuine sale strike-through).
+     ============================================================ */
+  const products = [
+    { id:1, name:"Classic Cotton Tee", price:29, oldPrice:39, stock:4, rating:5, img:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500", badge:"Sale" },
+    { id:2, name:"Relaxed Linen Shirt", price:59, stock:12, rating:5, img:"https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=500", badge:"" },
+    { id:3, name:"Everyday Denim Jacket", price:89, oldPrice:110, stock:3, rating:4, img:"https://images.unsplash.com/photo-1543076447-215ad9ba6923?w=500", badge:"Sale" },
+    { id:4, name:"Knit Wool Sweater", price:69, stock:20, rating:5, img:"https://images.unsplash.com/photo-1576871337622-98d48d1cf531?w=500", badge:"" },
+    { id:5, name:"Tailored Chino Pants", price:65, stock:8, rating:4, img:"https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=500", badge:"" },
+    { id:6, name:"Cozy Hoodie", price:55, oldPrice:70, stock:5, rating:5, img:"https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=500", badge:"Sale" },
+    { id:7, name:"Summer Midi Dress", price:75, stock:6, rating:5, img:"https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=500", badge:"" },
+    { id:8, name:"Leather Belt", price:35, stock:15, rating:4, img:"https://images.unsplash.com/photo-1624222247344-550fb60583dc?w=500", badge:"" }
+  ];
+
+  const FREE_SHIP_THRESHOLD = 75;
+  let cart = [];
+
+  function star(n){ return "★".repeat(n) + "☆".repeat(5-n); }
+
+  function renderProducts(){
+    const grid = document.getElementById('product-grid');
+    grid.innerHTML = products.map(p => `
+      <div class="card">
+        <div class="img" style="background-image:url('${p.img}')">
+          ${p.badge ? `<span class="badge">${p.badge}</span>` : ''}
+        </div>
+        <div class="card-body">
+          <div class="stars">${star(p.rating)}</div>
+          <h3>${p.name}</h3>
+          <div class="price">$${p.price.toFixed(2)}${p.oldPrice ? `<span class="old-price">$${p.oldPrice.toFixed(2)}</span>` : ''}</div>
+          <div class="stock">${(p.stock !== undefined && p.stock <= 5) ? `Only ${p.stock} left in stock` : ''}</div>
+          <button class="add-btn" onclick="addToCart(${p.id})">Add to Cart</button>
+        </div>
+      </div>`).join('');
+  }
+
+  function addToCart(id){
+    const prod = products.find(p => p.id === id);
+    const existing = cart.find(i => i.id === id);
+    if(existing){ existing.qty++; } else { cart.push({...prod, qty:1}); }
+    updateCart();
+    openCart();
+  }
+
+  function removeFromCart(id){
+    cart = cart.filter(i => i.id !== id);
+    updateCart();
+  }
+
+  function updateCart(){
+    document.getElementById('cart-count').textContent = cart.reduce((s,i)=>s+i.qty,0);
+    const itemsEl = document.getElementById('cart-items');
+    if(cart.length === 0){
+      itemsEl.innerHTML = '<p style="color:#888;padding:20px 0;">Your cart is empty.</p>';
+    } else {
+      itemsEl.innerHTML = cart.map(i => `
+        <div class="cart-item">
+          <span>${i.name} × ${i.qty}</span>
+          <span>$${(i.price*i.qty).toFixed(2)} <button onclick="removeFromCart(${i.id})">×</button></span>
+        </div>`).join('');
+    }
+    const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
+    document.getElementById('cart-total').textContent = total.toFixed(2);
+
+    // Free shipping progress (a genuine, useful incentive)
+    const remaining = FREE_SHIP_THRESHOLD - total;
+    const bar = document.getElementById('ship-bar');
+    const note = document.getElementById('ship-note');
+    if(total === 0){ note.textContent = ''; bar.style.width = '0%'; }
+    else if(remaining > 0){
+      note.textContent = `Add $${remaining.toFixed(2)} more to get FREE shipping!`;
+      bar.style.width = Math.min(100,(total/FREE_SHIP_THRESHOLD)*100) + '%';
+    } else {
+      note.textContent = '🎉 You qualify for FREE shipping!';
+      bar.style.width = '100%';
+    }
+  }
+
+  function openCart(){ document.getElementById('cart-drawer').classList.add('open'); document.getElementById('overlay').style.display='block'; }
+  function closeCart(){ document.getElementById('cart-drawer').classList.remove('open'); document.getElementById('overlay').style.display='none'; }
+
+  function checkout(){
+    if(cart.length === 0){ alert('Your cart is empty.'); return; }
+    alert('This is a demo. To accept real payments, connect a checkout provider like Shopify, Stripe, or Square.');
+  }
+
+  /* Sale countdown — set to a REAL end date so it stays honest.
+     Change the date below to your actual sale end. */
+  const saleEnd = new Date();
+  saleEnd.setDate(saleEnd.getDate() + 3); // example: 3 days from load; replace with a fixed real date
+
+  function updateCountdown(){
+    const now = new Date();
+    let diff = Math.max(0, saleEnd - now);
+    const d = Math.floor(diff/86400000); diff -= d*86400000;
+    const h = Math.floor(diff/3600000); diff -= h*3600000;
+    const m = Math.floor(diff/60000); diff -= m*60000;
+    const s = Math.floor(diff/1000);
+    const el = document.getElementById('countdown');
+    if(saleEnd - now <= 0){ document.getElementById('topbar').textContent = 'Free shipping on orders over $75'; return; }
+    el.textContent = `${d}d ${h}h ${m}m ${s}s`;
+  }
+  setInterval(updateCountdown, 1000);
+
+  renderProducts();
+  updateCart();
+  updateCountdown();
+</script>
+</body>
+</html>

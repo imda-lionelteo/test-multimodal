@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StyleHub — Modern Fashion Store</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --primary: #1a1a2e;
+    --accent: #e94560;
+    --accent-dark: #c9354f;
+    --light: #f9f9f9;
+    --gray: #888;
+    --success: #2ecc71;
+  }
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    color: var(--primary);
+    background: #fff;
+    line-height: 1.6;
+  }
+  a { text-decoration: none; color: inherit; }
+
+  /* Announcement Bar */
+  .announcement {
+    background: var(--accent);
+    color: #fff;
+    text-align: center;
+    padding: 8px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .announcement .timer { font-weight: 800; }
+
+  /* Header */
+  header {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  }
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 5%;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+  .logo { font-size: 26px; font-weight: 800; letter-spacing: -1px; }
+  .logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 25px; }
+  .nav-links a { font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+  .cart-btn {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    position: relative;
+    transition: background 0.2s;
+  }
+  .cart-btn:hover { background: var(--accent); }
+  .cart-count {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .menu-toggle { display: none; font-size: 26px; background: none; border: none; cursor: pointer; }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(rgba(26,26,46,0.6),rgba(26,26,46,0.6)), url('https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=1400') center/cover;
+    color: #fff;
+    text-align: center;
+    padding: 120px 5%;
+  }
+  .hero h1 { font-size: 52px; margin-bottom: 15px; line-height: 1.1; }
+  .hero p { font-size: 20px; margin-bottom: 30px; opacity: 0.95; }
+  .btn {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    padding: 15px 40px;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .btn:hover { background: var(--accent-dark); transform: translateY(-2px); }
+
+  /* Trust Badges */
+  .trust-bar {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    padding: 25px 5%;
+    background: var(--light);
+    text-align: center;
+  }
+  .trust-item { font-size: 14px; font-weight: 600; }
+  .trust-item .icon { font-size: 24px; display: block; margin-bottom: 5px; }
+
+  /* Sections */
+  .section { max-width: 1300px; margin: 0 auto; padding: 60px 5%; }
+  .section-title { text-align: center; font-size: 34px; margin-bottom: 10px; }
+  .section-sub { text-align: center; color: var(--gray); margin-bottom: 40px; }
+
+  /* Products */
+  .products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 30px;
+  }
+  .product-card {
+    border: 1px solid #eee;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.25s, box-shadow 0.25s;
+    position: relative;
+    background: #fff;
+  }
+  .product-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+  .badge-sale {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: var(--accent);
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    z-index: 2;
+  }
+  .product-img { width: 100%; height: 300px; object-fit: cover; }
+  .product-info { padding: 18px; }
+  .product-info h3 { font-size: 17px; margin-bottom: 6px; }
+  .stars { color: #f1c40f; font-size: 14px; }
+  .reviews-count { color: var(--gray); font-size: 12px; }
+  .price { margin: 10px 0; }
+  .price .now { font-size: 20px; font-weight: 800; color: var(--accent); }
+  .price .was { text-decoration: line-through; color: var(--gray); margin-left: 8px; font-size: 15px; }
+  .stock-note { font-size: 12px; color: var(--accent); font-weight: 600; margin-bottom: 10px; }
+  .add-btn {
+    width: 100%;
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .add-btn:hover { background: var(--accent); }
+
+  /* Testimonials */
+  .testimonials { background: var(--light); }
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+  }
+  .testimonial {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  }
+  .testimonial .stars { margin-bottom: 10px; }
+  .testimonial p { font-style: italic; margin-bottom: 15px; }
+  .testimonial .author { font-weight: 700; }
+
+  /* Newsletter */
+  .newsletter {
+    background: var(--primary);
+    color: #fff;
+    text-align: center;
+    padding: 60px 5%;
+  }
+  .newsletter h2 { font-size: 30px; margin-bottom: 10px; }
+  .newsletter p { margin-bottom: 25px; opacity: 0.9; }
+  .newsletter-form { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+  .newsletter-form input {
+    padding: 14px 20px;
+    border: none;
+    border-radius: 30px;
+    width: 320px;
+    font-size: 15px;
+  }
+
+  /* Footer */
+  footer {
+    background: #0f0f1e;
+    color: #ccc;
+    padding: 50px 5% 20px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 30px;
+    max-width: 1300px;
+    margin: 0 auto;
+  }
+  .footer-grid h4 { color: #fff; margin-bottom: 15px; }
+  .footer-grid a { display: block; margin-bottom: 8px; font-size: 14px; }
+  .footer-grid a:hover { color: var(--accent); }
+  .footer-bottom { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #2a2a3e; font-size: 13px; }
+
+  /* Cart Drawer */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+    display: none;
+  }
+  .overlay.open { display: block; }
+  .cart-drawer {
+    position: fixed;
+    top: 0; right: -450px;
+    width: 400px;
+    max-width: 90%;
+    height: 100%;
+    background: #fff;
+    z-index: 300;
+    transition: right 0.3s;
+    display: flex;
+    flex-direction: column;
+  }
+  .cart-drawer.open { right: 0; }
+  .cart-header {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+  }
+  .cart-header h3 { font-size: 20px; }
+  .close-cart { background: none; border: none; font-size: 26px; cursor: pointer; }
+  .cart-items { flex: 1; overflow-y: auto; padding: 20px; }
+  .cart-item { display: flex; gap: 12px; margin-bottom: 18px; align-items: center; }
+  .cart-item img { width: 70px; height: 70px; object-fit: cover; border-radius: 8px; }
+  .cart-item-info { flex: 1; }
+  .cart-item-info h4 { font-size: 14px; }
+  .cart-item-info .ci-price { color: var(--accent); font-weight: 700; }
+  .qty-controls { display: flex; align-items: center; gap: 8px; margin-top: 5px; }
+  .qty-controls button {
+    width: 26px; height: 26px;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+  .remove-item { background: none; border: none; color: var(--gray); cursor: pointer; font-size: 20px; }
+  .empty-cart { text-align: center; color: var(--gray); margin-top: 40px; }
+  .cart-footer { padding: 20px; border-top: 1px solid #eee; }
+  .cart-total { display: flex; justify-content: space-between; font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+  .free-ship-note { font-size: 13px; color: var(--success); font-weight: 600; margin-bottom: 15px; text-align: center; }
+  .checkout-btn { width: 100%; background: var(--accent); color: #fff; border: none; padding: 15px; border-radius: 8px; font-size: 17px; font-weight: 700; cursor: pointer; }
+  .checkout-btn:hover { background: var(--accent-dark); }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--success);
+    color: #fff;
+    padding: 14px 25px;
+    border-radius: 30px;
+    font-weight: 600;
+    z-index: 400;
+    opacity: 0;
+    transition: all 0.3s;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+  /* Modal */
+  .modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 500;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal.open { display: flex; }
+  .modal-content {
+    background: #fff;
+    padding: 40px;
+    border-radius: 12px;
+    max-width: 450px;
+    text-align: center;
+    margin: 20px;
+  }
+  .modal-content h2 { margin-bottom: 15px; }
+  .modal-content .btn { margin-top: 20px; }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .menu-toggle { display: block; }
+    .hero h1 { font-size: 34px; }
+    .hero { padding: 70px 5%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="announcement">
+  🔥 LIMITED TIME: Free shipping on orders over $50 + 20% OFF ends in <span class="timer" id="timer">02:59:59</span>
+</div>
+
+<header>
+  <div class="nav">
+    <div class="logo">Style<span>Hub</span></div>
+    <nav class="nav-links">
+      <a href="#shop">Shop</a>
+      <a href="#new">New Arrivals</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="cart-btn" onclick="openCart()">
+      🛒 Cart <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>Elevate Your Wardrobe</h1>
+  <p>Premium quality clothing at prices you'll love. Style that speaks for you.</p>
+  <button class="btn" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">Shop the Collection</button>
+</section>
+
+<div class="trust-bar">
+  <div class="trust-item"><span class="icon">🚚</span>Free Shipping Over $50</div>
+  <div class="trust-item"><span class="icon">↩️</span>30-Day Easy Returns</div>
+  <div class="trust-item"><span class="icon">🔒</span>Secure Checkout</div>
+  <div class="trust-item"><span class="icon">⭐</span>10,000+ Happy Customers</div>
+</div>
+
+<section class="section" id="shop">
+  <h2 class="section-title">Best Sellers</h2>
+  <p class="section-sub">Our most-loved pieces, flying off the shelves</p>
+  <div class="products" id="productGrid"></div>
+</section>
+
+<section class="testimonials" id="reviews">
+  <div class="section">
+    <h2 class="section-title">What Our Customers Say</h2>
+    <p class="section-sub">Join thousands of satisfied shoppers</p>
+    <div class="testimonial-grid">
+      <div class="testimonial">
+        <div class="stars">★★★★★</div>
+        <p>"Absolutely love the quality! The fabric is so soft and the fit is perfect. Will definitely order again."</p>
+        <div class="author">— Sarah M., Verified Buyer</div>
+      </div>
+      <div class="testimonial">
+        <div class="stars">★★★★★</div>
+        <p>"Fast shipping and amazing customer service. My new favorite online store, hands down."</p>
+        <div class="author">— James T., Verified Buyer</div>
+      </div>
+      <div class="testimonial">
+        <div class="stars">★★★★★</div>
+        <p>"The prices are unbeatable and the clothes look even better in person. Highly recommend!"</p>
+        <div class="author">— Emily R., Verified Buyer</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="newsletter">
+  <h2>Get 10% Off Your First Order</h2>
+  <p>Subscribe for exclusive deals, new arrivals & style tips.</p>
+  <form class="newsletter-form" onsubmit="subscribe(event)">
+    <input type="email" placeholder="Enter your email" required>
+    <button type="submit" class="btn">Get My Discount</button>
+  </form>
+</section>
+
+<footer id="contact">
+  <div class="footer-grid">
+    <div>
+      <div class="logo" style="color:#fff;">Style<span>Hub</span></div>
+      <p style="margin-top:10px;font-size:14px;">Premium fashion for everyone. Quality you can trust.</p>
+    </div>
+    <div>
+      <h4>Shop</h4>
+      <a href="#">Women</a><a href="#">Men</a><a href="#">Accessories</a><a href="#">Sale</a>
+    </div>
+    <div>
+      <h4>Help</h4>
+      <a href="#">Shipping Info</a><a href="#">Returns</a><a href="#">Size Guide</a><a href="#">FAQ</a>
+    </div>
+    <div>
+      <h4>Contact</h4>
+      <a href="mailto:hello@stylehub.com">hello@stylehub.com</a>
+      <a href="tel:+1234567890">+1 (234) 567-890</a>
+      <a href="#">📘 Facebook</a><a href="#">📸 Instagram</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2024 StyleHub. All rights reserved. | Secure payments via Visa, Mastercard, PayPal</div>
+</footer>
+
+<!-- Cart -->
+<div class="overlay" id="overlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h3>Your Cart</h3>
+    <button class="close-cart" onclick="closeCart()">×</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer">
+    <div class="free-ship-note" id="freeShipNote"></div>
+    <div class="cart-total"><span>Total:</span><span id="cartTotal">$0.00</span></div>
+    <button class="checkout-btn" onclick="checkout()">Proceed to Checkout →</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- Checkout Modal -->
+<div class="modal" id="checkoutModal">
+  <div class="modal-content">
+    <h2>🎉 Thank You!</h2>
+    <p>This is a demo checkout. In a live store, this would connect to a secure payment processor (like Stripe, PayPal, or Shopify Payments).</p>
+    <button class="btn" onclick="closeModal()">Continue Shopping</button>
+  </div>
+</div>
+
+<script>
+  // Product Data
+  const products = [
+    { id:1, name:"Classic Cotton Tee", price:24.99, was:34.99, img:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500", rating:5, reviews:214, stock:"Only 5 left!" },
+    { id:2, name:"Denim Jacket", price:59.99, was:89.99, img:"https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=500", rating:5, reviews:187, stock:"Selling fast" },
+    { id:3, name:"Summer Floral Dress", price:44.99, was:64.99, img:"https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=500", rating:4, reviews:342, stock:"Only 3 left!" },
+    { id:4, name:"Slim Fit Chinos", price:39.99, was:54.99, img:"https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=500", rating:5, reviews:156, stock:"" },
+    { id:5, name:"Knit Sweater", price:49.99, was:69.99, img:"https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=500", rating:5, reviews:98, stock:"Popular choice" },
+    { id:6, name:"Leather Sneakers", price:69.99, was:99.99, img:"https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500", rating:5, reviews:276, stock:"Only 4 left!" },
+    { id:7, name:"Casual Hoodie", price:44.99, was:59.99, img:"https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=500", rating:4, reviews:201, stock:"" },
+    { id:8, name:"Elegant Blazer", price:79.99, was:119.99, img:"https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=500", rating:5, reviews:143, stock:"Selling fast" }
+  ];
+
+  let cart = [];
+  const FREE_SHIP = 50;
+
+  function renderProducts() {
+    const grid = document.getElementById('productGrid');
+    grid.innerHTML = products.map(p => {
+      const discount = Math.round((1 - p.price/p.was)*100);
+      return `
+        <div class="product-card">
+          <span class="badge-sale">-${discount}%</span>
+          <img class="product-img" src="${p.img}" alt="${p.name}" loading="lazy">
+          <div class="product-info">
+            <h3>${p.name}</h3>
+            <div><span class="stars">${'★'.repeat(p.rating)}${'☆'.repeat(5-p.rating)}</span> <span class="reviews-count">(${p.reviews})</span></div>
+            <div class="price"><span class="now">$${p.price.toFixed(2)}</span><span class="was">$${p.was.toFixed(2)}</span></div>
+            ${p.stock ? `<div class="stock-note">⚡ ${p.stock}</div>` : '<div class="stock-note">&nbsp;</div>'}
+            <button class="add-btn" onclick="addToCart(${p.id})">Add to Cart</button>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  function addToCart(id) {
+    const item = cart.find(i => i.id === id);
+    if (item) { item.qty++; }
+    else { const p = products.find(p=>p.id===id); cart.push({...p, qty:1}); }
+    updateCart();
+    showToast('Added to cart! 🛒');
+  }
+
+  function changeQty(id, delta) {
+    const item = cart.find(i => i.id === id);
+    if (item) {
+      item.qty += delta;
+      if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
+    }
+    updateCart();
+  }
+
+  function removeItem(id) {
+    cart = cart.filter(i => i.id !== id);
+    updateCart();
+  }
+
+  function updateCart() {
+    const count = cart.reduce((s,i)=>s+i.qty,0);
+    document.getElementById('cartCount').textContent = count;
+    const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
+    document.getElementById('cartTotal').textContent = '$'+total.toFixed(2);
+
+    const note = document.getElementById('freeShipNote');
+    if (cart.length === 0) note.textContent = '';
+    else if (total >= FREE_SHIP) note.textContent = '✓ You qualify for

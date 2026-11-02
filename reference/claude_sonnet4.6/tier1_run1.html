@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StyleHub - Your Fashion Destination</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background: #fafafa;
+    }
+
+    /* Header */
+    header {
+        background: #fff;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 5%;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #2c3e50;
+        text-decoration: none;
+    }
+
+    .logo span {
+        color: #e74c3c;
+    }
+
+    .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+        color: #e74c3c;
+    }
+
+    .cart-icon {
+        position: relative;
+        cursor: pointer;
+        font-size: 1.5rem;
+    }
+
+    .cart-count {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background: #e74c3c;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        font-size: 0.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .menu-toggle {
+        display: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        background: none;
+        border: none;
+    }
+
+    /* Hero */
+    .hero {
+        background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+                    url('https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=1600&q=80');
+        background-size: cover;
+        background-position: center;
+        height: 70vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+    }
+
+    .hero-content h1 {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .hero-content p {
+        font-size: 1.3rem;
+        margin-bottom: 2rem;
+    }
+
+    .btn {
+        display: inline-block;
+        background: #e74c3c;
+        color: white;
+        padding: 0.9rem 2rem;
+        border: none;
+        border-radius: 30px;
+        font-size: 1rem;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .btn:hover {
+        background: #c0392b;
+        transform: translateY(-2px);
+    }
+
+    /* Sections */
+    section {
+        padding: 4rem 5%;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .section-title {
+        text-align: center;
+        font-size: 2.2rem;
+        margin-bottom: 0.5rem;
+        color: #2c3e50;
+    }
+
+    .section-subtitle {
+        text-align: center;
+        color: #777;
+        margin-bottom: 3rem;
+    }
+
+    /* Categories */
+    .categories {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .category-card {
+        position: relative;
+        height: 300px;
+        border-radius: 12px;
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .category-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s;
+    }
+
+    .category-card:hover img {
+        transform: scale(1.1);
+    }
+
+    .category-card .overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0,0,0,0.35);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    /* Products */
+    .products {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 2rem;
+    }
+
+    .product-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .product-img {
+        width: 100%;
+        height: 280px;
+        object-fit: cover;
+    }
+
+    .product-info {
+        padding: 1.2rem;
+    }
+
+    .product-info h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .product-category {
+        color: #999;
+        font-size: 0.85rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .product-price {
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: #e74c3c;
+        margin-bottom: 1rem;
+    }
+
+    .product-card .btn {
+        width: 100%;
+        text-align: center;
+        border-radius: 8px;
+        padding: 0.7rem;
+    }
+
+    /* Features */
+    .features {
+        background: #2c3e50;
+        color: white;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        text-align: center;
+    }
+
+    .feature-item .icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    /* Newsletter */
+    .newsletter {
+        background: #f1f1f1;
+        text-align: center;
+    }
+
+    .newsletter-form {
+        display: flex;
+        max-width: 500px;
+        margin: 1.5rem auto 0;
+        gap: 0.5rem;
+    }
+
+    .newsletter-form input {
+        flex: 1;
+        padding: 0.9rem 1rem;
+        border: 1px solid #ccc;
+        border-radius: 30px;
+        font-size: 1rem;
+    }
+
+    /* Footer */
+    footer {
+        background: #1a252f;
+        color: #ccc;
+        padding: 3rem 5% 1.5rem;
+    }
+
+    .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .footer-content h3 {
+        color: white;
+        margin-bottom: 1rem;
+    }
+
+    .footer-content ul {
+        list-style: none;
+    }
+
+    .footer-content ul li {
+        margin-bottom: 0.5rem;
+    }
+
+    .footer-content a {
+        color: #ccc;
+        text-decoration: none;
+    }
+
+    .footer-content a:hover {
+        color: #e74c3c;
+    }
+
+    .footer-bottom {
+        text-align: center;
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #34495e;
+    }
+
+    /* Cart Modal */
+    .cart-modal {
+        position: fixed;
+        top: 0;
+        right: -450px;
+        width: 400px;
+        max-width: 90%;
+        height: 100%;
+        background: white;
+        box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+        transition: right 0.3s;
+        z-index: 200;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .cart-modal.open {
+        right: 0;
+    }
+
+    .cart-header {
+        padding: 1.5rem;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .close-cart {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+    }
+
+    .cart-items {
+        flex: 1;
+        overflow-y: auto;
+        padding: 1rem 1.5rem;
+    }
+
+    .cart-item {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #f1f1f1;
+    }
+
+    .cart-item img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .cart-item-details {
+        flex: 1;
+    }
+
+    .cart-item-details h4 {
+        font-size: 0.95rem;
+    }
+
+    .remove-item {
+        color: #e74c3c;
+        cursor: pointer;
+        font-size: 0.85rem;
+        background: none;
+        border: none;
+    }
+
+    .cart-footer {
+        padding: 1.5rem;
+        border-top: 1px solid #eee;
+    }
+
+    .cart-total {
+        display: flex;
+        justify-content: space-between;
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+
+    .checkout-btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .overlay-bg {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 150;
+        display: none;
+    }
+
+    .overlay-bg.show {
+        display: block;
+    }
+
+    .empty-cart {
+        text-align: center;
+        color: #999;
+        margin-top: 2rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .nav-links {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: white;
+            flex-direction: column;
+            padding: 1rem 5%;
+            display: none;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+        .nav-links.active {
+            display: flex;
+        }
+        .menu-toggle {
+            display: block;
+        }
+        .hero-content h1 {
+            font-size: 2.2rem;
+        }
+    }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+    <nav class="navbar">
+        <a href="#" class="logo">Style<span>Hub</span></a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#categories">Categories</a></li>
+            <li><a href="#products">Shop</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div style="display:flex; align-items:center; gap:1rem;">
+            <div class="cart-icon" onclick="toggleCart()">
+                🛒
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        </div>
+    </nav>
+</header>
+
+<!-- Hero -->
+<section class="hero" id="home" style="max-width:none; padding:0;">
+    <div class="hero-content">
+        <h1>New Season Arrivals</h1>
+        <p>Discover the latest trends in fashion at unbeatable prices</p>
+        <a href="#products" class="btn">Shop Now</a>
+    </div>
+</section>
+
+<!-- Categories -->
+<section id="categories">
+    <h2 class="section-title">Shop by Category</h2>
+    <p class="section-subtitle">Find exactly what you're looking for</p>
+    <div class="categories">
+        <div class="category-card" onclick="filterProducts('Women')">
+            <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&q=80" alt="Women">
+            <div class="overlay">Women</div>
+        </div>
+        <div class="category-card" onclick="filterProducts('Men')">
+            <img src="https://images.unsplash.com/photo-1516257984-b1b4d707412e?w=600&q=80" alt="Men">
+            <div class="overlay">Men</div>
+        </div>
+        <div class="category-card" onclick="filterProducts('Accessories')">
+            <img src="https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=600&q=80" alt="Accessories">
+            <div class="overlay">Accessories</div>
+        </div>
+    </div>
+</section>
+
+<!-- Products -->
+<section id="products">
+    <h2 class="section-title">Featured Products</h2>
+    <p class="section-subtitle">Handpicked styles just for you</p>
+    <div style="text-align:center; margin-bottom:2rem;">
+        <button class="btn" style="background:#2c3e50; margin:0.25rem;" onclick="filterProducts('all')">All</button>
+        <button class="btn" style="background:#2c3e50; margin:0.25rem;" onclick="filterProducts('Women')">Women</button>
+        <button class="btn" style="background:#2c3e50; margin:0.25rem;" onclick="filterProducts('Men')">Men</button>
+        <button class="btn" style="background:#2c3e50; margin:0.25rem;" onclick="filterProducts('Accessories')">Accessories</button>
+    </div>
+    <div class="products" id="productsGrid"></div>
+</section>
+
+<!-- Features -->
+<section class="features" style="max-width:none;">
+    <div style="max-width:1400px; margin:0 auto;">
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="icon">🚚</div>
+                <h3>Free Shipping</h3>
+                <p>On orders over $50</p>
+            </div>
+            <div class="feature-item">
+                <div class="icon">↩️</div>
+                <h3>Easy Returns</h3>
+                <p>30-day return policy</p>
+            </div>
+            <div class="feature-item">
+                <div class="icon">🔒</div>
+                <h3>Secure Payment</h3>
+                <p>100% protected checkout</p>
+            </div>
+            <div class="feature-item">
+                <div class="icon">💬</div>
+                <h3>24/7 Support</h3>
+                <p>We're here to help</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About -->
+<section id="about" style="text-align:center;">
+    <h2 class="section-title">About StyleHub</h2>
+    <p style="max-width:700px; margin:1rem auto; color:#666;">
+        StyleHub is your one-stop destination for trendy, high-quality fashion.
+        We carefully curate every piece to bring you the best styles at affordable prices.
+        Our mission is to make you look and feel your best, every single day.
+    </p>
+</section>
+
+<!-- Newsletter -->
+<section class="newsletter" id="contact" style="max-width:none;">
+    <div style="max-width:1400px; margin:0 auto;">
+        <h2 class="section-title">Stay Updated</h2>
+        <p class="section-subtitle">Subscribe for exclusive offers and new arrivals</p>
+        <form class="newsletter-form" onsubmit="subscribe(event)">
+            <input type="email" placeholder="Enter your email" required>
+            <button type="submit" class="btn">Subscribe</button>
+        </form>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-content">
+        <div>
+            <h3>Style<span style="color:#e74c3c;">Hub</span></h3>
+            <p>Your fashion destination for the latest trends and timeless classics.</p>
+        </div>
+        <div>
+            <h3>Shop</h3>
+            <ul>
+                <li><a href="#products">Women</a></li>
+                <li><a href="#products">Men</a></li>
+                <li><a href="#products">Accessories</a></li>
+                <li><a href="#products">Sale</a></li>
+            </ul>
+        </div>
+        <div>
+            <h3>Help</h3>
+            <ul>
+                <li><a href="#">Shipping Info</a></li>
+                <li><a href="#">Returns</a></li>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+            </ul>
+        </div>
+        <div>
+            <h3>Follow Us</h3>
+            <ul>
+                <li><a href="#">Instagram</a></li>
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Twitter</a></li>
+                <li><a href="#">Pinterest</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 StyleHub. All rights reserved.</p>
+    </div>
+</footer>
+
+<!-- Cart -->
+<div class="overlay-bg" id="overlayBg" onclick="toggleCart()"></div>
+<div class="cart-modal" id="cartModal">
+    <div class="cart-header">
+        <h2>Your Cart</h2>
+        <button class="close-cart" onclick="toggleCart()">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-footer">
+        <div class="cart-total">
+            <span>Total:</span>
+            <span id="cartTotal">$0.00</span>
+        </div>
+        <button class="btn checkout-btn" onclick="checkout()">Checkout</button>
+    </div>
+</div>
+
+<script>
+    // Product data — edit this list to add/change your products
+    const products = [
+        { id: 1, name: "Floral Summer Dress", category: "Women", price: 49.99, img: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=500&q=80" },
+        { id: 2, name: "Classic Denim Jacket", category: "Women", price: 79.99, img: "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=500&q=80" },
+        { id: 3, name: "Men's Casual Shirt", category: "Men", price: 39.99, img: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=500&q=80" },
+        { id: 4, name: "Slim Fit Chinos", category: "Men", price: 54.99, img: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=500&q=80" },
+        { id: 5, name: "Leather Handbag", category: "Accessories", price: 89.99, img: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=500&q=80" },
+        { id: 6, name: "Classic Sunglasses", category: "Accessories", price: 24.99, img: "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=500&q=80" },
+        { id: 7, name: "Knit Sweater", category: "Women", price: 59.99, img: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=500&q=80" },
+        { id: 8, name: "Men's Bomber Jacket", category: "Men", price: 99.99, img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500&q=80" },
+    ];
+
+    let cart = [];
+
+    // Render products
+    function renderProducts(list) {
+        const grid = document.getElementById('productsGrid');
+        grid.innerHTML = '';
+        list.forEach(p => {
+            grid.innerHTML += `
+                <div class="product-card">
+                    <img src="${p.img}" alt="${p.name}" class="product-img">
+                    <div class="product-info">
+                        <p class="product-category">${p.category}</p>
+                        <h3>${p.name}</h3>
+                        <p class="product-price">$${p.price.toFixed(2)}</p>
+                        <button class="btn" onclick="addToCart(${p.id})">Add to Cart</button>
+                    </div>
+                </div>`;
+        });
+    }
+
+    function filterProducts(category) {
+        if (category === 'all') {
+            renderProducts(products);
+        } else {
+            renderProducts(products.filter(p => p.category === category));
+        }
+        document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function addToCart(id) {
+        const product = products.find(p => p.id === id);
+        const existing = cart.find(item => item.id === id);
+        if (existing) {
+            existing.qty++;
+        } else {
+            cart.push({ ...product, qty: 1 });
+        }
+        updateCart();
+    }
+
+    function removeFromCart(id) {
+        cart = cart.filter(item => item.id !== id);
+        updateCart();
+    }
+
+    function updateCart() {
+        const cartItems = document.getElementById('cartItems');
+        const cartCount = document.getElementById('cartCount');
+        const cartTotal = document.getElementById('cartTotal');
+
+        cartCount.textContent = cart.reduce((sum, item) => sum + item.qty, 0);
+
+        if (cart.length === 0) {
+            cartItems.innerHTML = '<p class="empty-cart">Your cart is empty 🛍️</p>';
+        } else {
+            cartItems.innerHTML = '';
+            cart.forEach(item => {
+                cartItems.innerHTML += `
+                    <div class="cart-item">
+                        <img src="${item.img}" alt="${item.name}">
+                        <div class="cart-item-details">
+                            <h4>${item.name}</h4>
+                            <p>$${item.price.toFixed(2)} × ${item.qty}</p>
+                            <button class="remove-item" onclick="removeFromCart(${item.id})">Remove</button>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+        cartTotal.textContent = '$' + total.toFixed(2);
+    }
+
+    function toggleCart() {
+        document.getElementById('cartModal').classList.toggle('open');
+        document.getElementById('overlayBg').classList.toggle('show');
+    }
+
+    function toggleMenu() {
+        document.getElementById('navLinks').classList.toggle('active');
+    }
+
+    function checkout() {
+        if (cart.length === 0) {
+            alert('Your cart is empty. Add some items first!');
+            return;
+        }
+        const total = cart.reduce((

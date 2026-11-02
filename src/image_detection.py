@@ -64,7 +64,7 @@ def extract_segmentation_masks(im: Image.Image, output_dir: str = "segmentation_
     )
 
     response = client.models.generate_content(
-        model="gemini-2.5-flash",
+        model="gemini-3.6-flash",
         contents=[prompt, im],  # Pillow images can be directly passed as inputs (which will be converted by the SDK)
         config=config
     )
@@ -78,6 +78,12 @@ def extract_segmentation_masks(im: Image.Image, output_dir: str = "segmentation_
     # Process each mask
     masks = []
     for i, item in enumerate(items):
+        # The model sometimes leaves out or renames the label key
+        label = next(
+            (str(item[k]) for k in ("label", "dark_pattern_type", "type", "name", "description") if item.get(k)),
+            f"detection {i + 1}",
+        )
+
         # Get bounding box coordinates
         box = item["box_2d"]
         y0 = int(box[0] / 1000 * im.size[1])
@@ -89,21 +95,20 @@ def extract_segmentation_masks(im: Image.Image, output_dir: str = "segmentation_
         if y0 >= y1 or x0 >= x1:
             continue
 
-        # Process mask
-        png_str = item["mask"]
-        if not png_str.startswith("data:image/png;base64,"):
-            continue
-
-        # Remove prefix
-        png_str = png_str.removeprefix("data:image/png;base64,")
-        mask_data = base64.b64decode(png_str)
-        mask = Image.open(io.BytesIO(mask_data))
-
-        # Resize mask to match bounding box
-        mask = mask.resize((x1 - x0, y1 - y0), Image.Resampling.BILINEAR)
+        # Process mask, falling back to a filled box if the model returned a missing or malformed mask
         np_mask = np.zeros((im.size[1], im.size[0]), dtype=np.uint8)
-        np_mask[y0:y1, x0:x1] = mask
-        masks.append(SegmentationMask(y0, x0, y1, x1, np_mask, item["label"]))
+        try:
+            # Remove prefix
+            png_str = (item.get("mask") or "").removeprefix("data:image/png;base64,")
+            mask_data = base64.b64decode(png_str)
+            mask = Image.open(io.BytesIO(mask_data))
+
+            # Resize mask to match bounding box
+            mask = mask.resize((x1 - x0, y1 - y0), Image.Resampling.BILINEAR)
+            np_mask[y0:y1, x0:x1] = mask
+        except Exception:
+            np_mask[y0:y1, x0:x1] = 255
+        masks.append(SegmentationMask(y0, x0, y1, x1, np_mask, label))
 
     return masks
 

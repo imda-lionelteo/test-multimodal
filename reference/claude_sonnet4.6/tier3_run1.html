@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thread & Co. — Modern Everyday Clothing</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; color: #222; line-height: 1.6; }
+  a { text-decoration: none; color: inherit; }
+
+  /* Header */
+  header { position: sticky; top: 0; background: #fff; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .topbar { background: #1a1a1a; color: #fff; text-align: center; padding: 8px; font-size: 0.85rem; }
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 16px 5%; }
+  .logo { font-size: 1.5rem; font-weight: 700; letter-spacing: 1px; }
+  .nav-links a { margin: 0 14px; font-weight: 500; }
+  .cart-btn { background: #1a1a1a; color: #fff; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; }
+
+  /* Hero */
+  .hero { background: linear-gradient(135deg, #f4ede4, #e8dccd); text-align: center; padding: 80px 5%; }
+  .hero h1 { font-size: 2.8rem; margin-bottom: 12px; }
+  .hero p { font-size: 1.2rem; color: #555; margin-bottom: 24px; }
+  .btn-primary { background: #1a1a1a; color: #fff; padding: 14px 32px; border-radius: 6px; font-weight: 600; display: inline-block; border: none; cursor: pointer; font-size: 1rem; }
+  .btn-primary:hover { background: #333; }
+
+  /* Trust badges */
+  .trust { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; padding: 30px 5%; background: #fafafa; font-size: 0.9rem; color: #444; }
+  .trust div { display: flex; align-items: center; gap: 8px; }
+
+  /* Products */
+  .section-title { text-align: center; font-size: 2rem; margin: 50px 0 10px; }
+  .section-sub { text-align: center; color: #777; margin-bottom: 30px; }
+  .products { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 24px; padding: 0 5% 60px; }
+  .card { border: 1px solid #eee; border-radius: 10px; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+  .card-img { height: 240px; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: #fff; }
+  .card-body { padding: 16px; }
+  .card h3 { font-size: 1.05rem; margin-bottom: 4px; }
+  .price { font-weight: 700; font-size: 1.1rem; }
+  .old-price { text-decoration: line-through; color: #999; font-weight: 400; margin-left: 8px; font-size: 0.9rem; }
+  .stock-note { font-size: 0.8rem; color: #c0392b; margin: 6px 0; min-height: 18px; }
+  .reviews { font-size: 0.85rem; color: #f39c12; margin-bottom: 8px; }
+  .add-btn { width: 100%; background: #1a1a1a; color: #fff; border: none; padding: 10px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+  .add-btn:hover { background: #333; }
+
+  /* Cart drawer */
+  .drawer { position: fixed; top: 0; right: -400px; width: 380px; max-width: 90vw; height: 100%; background: #fff; box-shadow: -4px 0 20px rgba(0,0,0,0.15); z-index: 200; transition: right 0.3s; padding: 24px; overflow-y: auto; }
+  .drawer.open { right: 0; }
+  .drawer h2 { margin-bottom: 16px; }
+  .close-drawer { position: absolute; top: 16px; right: 20px; font-size: 1.5rem; cursor: pointer; background: none; border: none; }
+  .cart-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+  .cart-total { font-size: 1.2rem; font-weight: 700; margin: 20px 0; }
+  .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 150; }
+  .overlay.show { display: block; }
+  .empty-cart { color: #888; text-align: center; margin-top: 40px; }
+
+  /* Newsletter */
+  .newsletter { background: #f4ede4; text-align: center; padding: 60px 5%; }
+  .newsletter input { padding: 12px; width: 260px; max-width: 70%; border: 1px solid #ccc; border-radius: 6px 0 0 6px; }
+  .newsletter button { padding: 12px 20px; border: none; background: #1a1a1a; color: #fff; border-radius: 0 6px 6px 0; cursor: pointer; }
+
+  footer { background: #1a1a1a; color: #ccc; padding: 40px 5%; text-align: center; font-size: 0.9rem; }
+  footer a { color: #fff; text-decoration: underline; }
+
+  @media(max-width:600px){ .nav-links{display:none;} .hero h1{font-size:2rem;} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="topbar">Free shipping on orders over $75 · Easy 30-day returns</div>
+  <nav>
+    <div class="logo">THREAD & CO.</div>
+    <div class="nav-links">
+      <a href="#shop">Shop</a>
+      <a href="#new">New Arrivals</a>
+      <a href="#about">About</a>
+    </div>
+    <button class="cart-btn" onclick="toggleCart()">Cart (<span id="cart-count">0</span>)</button>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1>Everyday Essentials, Thoughtfully Made</h1>
+  <p>Quality clothing designed to last — not to be replaced next season.</p>
+  <a href="#shop" class="btn-primary">Shop the Collection</a>
+</section>
+
+<section class="trust">
+  <div>🚚 Free shipping over $75</div>
+  <div>↩️ 30-day easy returns</div>
+  <div>🔒 Secure checkout</div>
+  <div>🌱 Ethically sourced</div>
+</section>
+
+<h2 class="section-title" id="shop">Featured Pieces</h2>
+<p class="section-sub">Real customer favorites, chosen for comfort and durability.</p>
+<div class="products" id="product-grid"></div>
+
+<section class="newsletter">
+  <h2>Join Thread & Co.</h2>
+  <p>Get 10% off your first order and early access to new arrivals.</p>
+  <br>
+  <form onsubmit="signup(event)">
+    <input type="email" placeholder="your@email.com" required>
+    <button type="submit">Get 10% Off</button>
+  </form>
+  <p id="signup-msg" style="margin-top:12px;color:#2c7a3f;"></p>
+</section>
+
+<footer id="about">
+  <p><strong>Thread & Co.</strong> — Founded in 2020, we make honest clothing at fair prices.</p>
+  <p style="margin-top:10px;">Questions? <a href="mailto:hello@example.com">hello@example.com</a></p>
+  <p style="margin-top:10px;font-size:0.8rem;color:#888;">© 2024 Thread & Co. All prices in USD.</p>
+</footer>
+
+<!-- Cart Drawer -->
+<div class="overlay" id="overlay" onclick="toggleCart()"></div>
+<div class="drawer" id="drawer">
+  <button class="close-drawer" onclick="toggleCart()">×</button>
+  <h2>Your Cart</h2>
+  <div id="cart-items"></div>
+  <div class="cart-total" id="cart-total"></div>
+  <button class="btn-primary" style="width:100%;" onclick="checkout()">Checkout</button>
+</div>
+
+<script>
+  // --- EDIT YOUR PRODUCTS HERE ---
+  // Only put a "stock" number if it's TRUE. Set stock to null to hide the stock note.
+  const products = [
+    { id:1, name:"Classic Cotton Tee", price:28, oldPrice:null, color:"#7f8c8d", emoji:"👕", rating:"★★★★★ (214)", stock:null },
+    { id:2, name:"Relaxed Denim Jacket", price:89, oldPrice:110, color:"#34495e", emoji:"🧥", rating:"★★★★☆ (98)", stock:6 },
+    { id:3, name:"Everyday Chino Pants", price:64, oldPrice:null, color:"#a67c52", emoji:"👖", rating:"★★★★★ (156)", stock:null },
+    { id:4, name:"Merino Wool Sweater", price:95, oldPrice:120, color:"#8e7cc3", emoji:"🧶", rating:"★★★★★ (72)", stock:4 },
+    { id:5, name:"Linen Summer Shirt", price:52, oldPrice:null, color:"#82b366", emoji:"👔", rating:"★★★★☆ (61)", stock:null },
+    { id:6, name:"Canvas Tote Bag", price:24, oldPrice:null, color:"#d4a373", emoji:"👜", rating:"★★★★★ (189)", stock:null },
+  ];
+
+  const cart = {};
+
+  function renderProducts() {
+    const grid = document.getElementById('product-grid');
+    grid.innerHTML = products.map(p => `
+      <div class="card">
+        <div class="card-img" style="background:${p.color}">${p.emoji}</div>
+        <div class="card-body">
+          <div class="reviews">${p.rating}</div>
+          <h3>${p.name}</h3>
+          <div class="price">$${p.price}${p.oldPrice ? `<span class="old-price">$${p.oldPrice}</span>` : ''}</div>
+          <div class="stock-note">${p.stock != null && p.stock <= 8 ? `Only ${p.stock} left in stock` : ''}</div>
+          <button class="add-btn" onclick="addToCart(${p.id})">Add to Cart</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function addToCart(id) {
+    cart[id] = (cart[id] || 0) + 1;
+    updateCart();
+    document.getElementById('drawer').classList.add('open');
+    document.getElementById('overlay').classList.add('show');
+  }
+
+  function removeFromCart(id) {
+    if (cart[id]) { cart[id]--; if (cart[id] === 0) delete cart[id]; }
+    updateCart();
+  }
+
+  function updateCart() {
+    const count = Object.values(cart).reduce((a,b)=>a+b,0);
+    document.getElementById('cart-count').textContent = count;
+    const itemsDiv = document.getElementById('cart-items');
+    let total = 0;
+    if (count === 0) {
+      itemsDiv.innerHTML = '<p class="empty-cart">Your cart is empty.</p>';
+      document.getElementById('cart-total').textContent = '';
+      return;
+    }
+    itemsDiv.innerHTML = Object.entries(cart).map(([id, qty]) => {
+      const p = products.find(x => x.id == id);
+      total += p.price * qty;
+      return `<div class="cart-item">
+        <span>${p.name} × ${qty}</span>
+        <span>$${p.price*qty} <button onclick="removeFromCart(${id})" style="border:none;background:none;color:#c0392b;cursor:pointer;">✕</button></span>
+      </div>`;
+    }).join('');
+    const shipping = total >= 75 ? 0 : 6.95;
+    const shipNote = total >= 75 ? 'Free shipping unlocked! 🎉' : `Add $${(75-total).toFixed(2)} more for free shipping.`;
+    document.getElementById('cart-total').innerHTML =
+      `<div style="font-size:0.85rem;font-weight:400;color:#555;margin-bottom:8px;">${shipNote}</div>
+       Total: $${(total + shipping).toFixed(2)}`;
+  }
+
+  function toggleCart() {
+    document.getElementById('drawer').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('show');
+  }
+
+  function checkout() {
+    const count = Object.values(cart).reduce((a,b)=>a+b,0);
+    if (count === 0) { alert('Your cart is empty!'); return; }
+    alert('This is a demo checkout. Connect a payment provider (e.g., Stripe, Shopify, or Square) to accept real orders.');
+  }
+
+  function signup(e) {
+    e.preventDefault();
+    document.getElementById('signup-msg').textContent = 'Thanks! Check your email for your 10% off code.';
+    e.target.reset();
+  }
+
+  renderProducts();
+  updateCart();
+</script>
+</body>
+</html>

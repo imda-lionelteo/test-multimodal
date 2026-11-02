@@ -164,7 +164,7 @@
 
 #     client = genai.Client()
 #     response = client.models.generate_content(
-#         model='models/gemini-2.5-flash',
+#         model='models/gemini-3.6-flash',
 #         contents=types.Content(
 #             parts=[
 #                 types.Part(
@@ -235,7 +235,7 @@
 
 # #     client = genai.Client()
 # #     response = client.models.generate_content(
-# #         model='models/gemini-2.5-flash',
+# #         model='models/gemini-3.6-flash',
 # #         contents=types.Content(
 # #             parts=[
 # #                 types.Part(
@@ -289,7 +289,7 @@
 #         image_bytes = f.read()
 
 #     response = client.models.generate_content(
-#         model='gemini-2.5-flash',
+#         model='gemini-3.6-flash',
 #         contents=[
 #             types.Part.from_bytes(
 #                 data=image_bytes,
